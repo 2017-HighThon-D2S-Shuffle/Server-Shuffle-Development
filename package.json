@@ -1,0 +1,20 @@
+{
+  "name": "2017-HighThon-D2S-Shuffle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2017-HighThon-D2S-Shuffle/Server-Shuffle-Development.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2017-HighThon-D2S-Shuffle/Server-Shuffle-Development/issues"
+  },
+  "homepage": "https://github.com/2017-HighThon-D2S-Shuffle/Server-Shuffle-Development#readme"
+}
