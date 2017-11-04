@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/2017-HighThon-D2S-Shuffle/Server-Shuffle-Development/issues"
   },
-  "homepage": "https://github.com/2017-HighThon-D2S-Shuffle/Server-Shuffle-Development#readme"
+  "homepage": "https://github.com/2017-HighThon-D2S-Shuffle/Server-Shuffle-Development#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.0",
+    "passport-twitter": "^1.0.4"
+  }
 }
