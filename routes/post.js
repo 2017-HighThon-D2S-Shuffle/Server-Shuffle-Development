@@ -7,7 +7,8 @@ module.exports = (router, Posts, rndString, moment) => {
         var post_time = new Date()
         new_post.token = "P" + rndString.generate(46);
         new_post.post_time = post_time
-        new_post.post_score = ""
+        new_post.post_score = "2.5"
+        new_post.post_vote = "0"
         new_post = new Posts(new_post)
         try {
             var result = await new_post.save();
@@ -31,7 +32,17 @@ module.exports = (router, Posts, rndString, moment) => {
         })
 
         .post('/shape', (req, res)=>{
-
+            Posts.findOne({token:req.param('token')}, (err, result)=>{
+                if(err){
+                    throw err
+                }
+                else if(result){
+                    post_vote = post_vote.parseInt() + 1
+                    post_score = ((post_score.parseInt() * (post_vote-1)) + req.param('shape').parseInt()) / post_vote
+                    Posts.update(post_score)
+                    Posts.update(post_vote)
+                }
+            })
         })
 
 

@@ -19,7 +19,6 @@ var UserSchema = mongoose.Schema({
     user_token: {type: String}
 })
 
-User = mongoose.model('user', UserSchema)
 
 var PostSchema = mongoose.Schema({
     post_name: {type: String},
@@ -28,12 +27,13 @@ var PostSchema = mongoose.Schema({
     post_time: {type: String},
     post_twitter_time: {type: String},
     post_score: {type: String},
+    post_vote: {type: String},
     post_token: {type: String}
 })
 
-Post = mongoose.model('post', PostSchema)
+var Post = mongoose.model('post', PostSchema)
+var User = mongoose.model('user', UserSchema)
 
 exports.User = User
 exports.Post = Post
-
-export
+exports.db = db
