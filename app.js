@@ -1,4 +1,4 @@
-var app = express();
+var app = express;
 var router = express.Router();
 
 var rndString = require('randomstring')
