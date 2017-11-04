@@ -37,12 +37,35 @@ module.exports = (router, Posts, rndString, moment) => {
                     throw err
                 }
                 else if(result){
-                    post_vote = post_vote.parseInt() + 1
-                    post_score = ((post_score.parseInt() * (post_vote-1)) + req.param('shape').parseInt()) / post_vote
-                    Posts.update(post_score)
-                    Posts.update(post_vote)
+
+                    var vote = post_vote.parseInt() + 1
+                    var score = ((post_score.parseInt() * post_vote) + req.param('shape').parseInt()) / (post_vote.parseInt() + 1)
+
+                    Post.update({
+                        token : req.param('token')
+                    }, {$set:{post_vote:vote}}, {$set:{post_score:score}}, (err)=>{
+                        if(err){
+                            console.log('/twitter_token scoreupdate Error')
+                            res.send(500, '/twitter_token scoreupdate Error')
+                            throw err
+                        }
+                        else {
+                            res.send(200, 'Update Success')
+                        }
+                    })
                 }
+                return res.status(200).send("success")
             })
+        })
+
+        .post('/browse', (req, res)=>{
+            Posts.find().sort(post_score.parseInt()).exec(function (err, result) {
+                if(err){
+                    throw err;
+                }
+                var temp_result = { "responseData" : result };
+                res.send(200, temp_result);
+            });
         })
 
 
