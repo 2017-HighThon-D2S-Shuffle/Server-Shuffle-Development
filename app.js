@@ -10,6 +10,7 @@ var mongoose = require('mongoose')
 var db = require('./mongo/database')
 var passport = require('./passport')()
 var schema = mongoose.Schema;
+var AppTwitterStrategy = require('passport-twitter-token')
 
 //server setting
 app.use(bodyParser.json());
@@ -23,8 +24,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //router
-var auth = require('./routes/auth')(express.Router(), db, passport, rndString);
-var post = require('./routes/post')(express.Router(), db, rndString, AppTwitterStrategy);
+var auth = require('./routes/auth')(express.Router(), db, rndString);
+var post = require('./routes/post')(express.Router(), db, rndString);
 
 require('./routes/twitter')(app, db, passport, AppTwitterStrategy, rndString)
 

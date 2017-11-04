@@ -1,4 +1,4 @@
-module.exports = (router, Posts, rndString, moment) => {
+module.exports = (router, Posts, rndString) => {
 
     let signin_params = ['id', 'passwd'];
 
@@ -16,7 +16,7 @@ module.exports = (router, Posts, rndString, moment) => {
             if (e instanceof post_duplicate) return res.status(409).json({message: "already exist"});
             if (e instanceof ValidationError) return res.status(400).json({message: e.message});
         }
-        let return_post = {id: new_post.id, token: new_post.token}
+        let return_post = {post_id: new_post.id, post_token: new_post.token}
         if (result) return res.status(200).json(return_post);
         else return res.status(412).send("fail");
     })
@@ -67,7 +67,5 @@ module.exports = (router, Posts, rndString, moment) => {
                 res.send(200, temp_result);
             });
         })
-
-
     return router
 }
