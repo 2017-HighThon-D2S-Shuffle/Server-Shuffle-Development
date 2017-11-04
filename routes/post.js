@@ -50,7 +50,7 @@ module.exports = (router, Posts, rndString) => {
                             throw err
                         }
                         else {
-                            res.send(200, 'Update Success')
+                            res.send(200, post_score)
                         }
                     })
                 }
