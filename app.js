@@ -31,7 +31,7 @@ app.use('/auth',auth);
 app.use('/post',post);
 app.use('/twitter', twitter)
 
-app.listen(3000, function(){
+app.listen(8681, function(){
     console.log("Server Running at 3000 port")
 })
 

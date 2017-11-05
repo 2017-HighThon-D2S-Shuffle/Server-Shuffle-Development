@@ -34,6 +34,6 @@ var PostSchema = mongoose.Schema({
 var Post = mongoose.model('post', PostSchema)
 var User = mongoose.model('user', UserSchema)
 
-exports.User = User
-exports.Post = Post
-exports.db = db
+exports.User = User;
+exports.Post = Post;
+exports.db = db;
