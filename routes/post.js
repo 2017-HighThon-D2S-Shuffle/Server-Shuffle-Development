@@ -1,8 +1,11 @@
-module.exports = (router, Posts, rndString) => {
+var express = require('express');
+var rndString = require('randomstring')
+var router = express.Router();
+var db = require('../mongo/database')
+let signin_params = ['id', 'passwd'];
 
-    let signin_params = ['id', 'passwd'];
-
-    router.post('/upload', async (req, res) => {
+function init(router, Posts, rndString){
+    router.post('/upload', (req, res) => {
         var new_post = req.body;
         var post_time = new Date()
         new_post.token = "P" + rndString.generate(46);
@@ -11,7 +14,7 @@ module.exports = (router, Posts, rndString) => {
         new_post.post_vote = "0"
         new_post = new Posts(new_post)
         try {
-            var result = await new_post.save();
+            var result = new_post.save();
         } catch (e) {
             if (e instanceof post_duplicate) return res.status(409).json({message: "already exist"});
             if (e instanceof ValidationError) return res.status(400).json({message: e.message});
@@ -67,5 +70,7 @@ module.exports = (router, Posts, rndString) => {
                 res.send(200, temp_result);
             });
         })
-    return router
+    return router;
 }
+
+module.exports = init(router, db.Post, rndString);

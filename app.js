@@ -1,16 +1,11 @@
-var app = express;
-var router = express.Router();
-
-var rndString = require('randomstring')
 var express = require('express')
+var app = express();
+var router = express.Router();
 var bodyParser = require('body-parser')
-var moment = require('moment-timezone')
-var fs = require('fs')
 var mongoose = require('mongoose')
-var db = require('./mongo/database')
-var passport = require('./passport')()
+var session = require('express-session')
+var passport = require('passport')
 var schema = mongoose.Schema;
-var AppTwitterStrategy = require('passport-twitter-token')
 
 //server setting
 app.use(bodyParser.json());
@@ -20,19 +15,21 @@ app.use(session({
     saveUninitialized: true,
     secret: '₩1234567890-=~!@#$%^&*()_+'
 }));
+
+//router
+var index = require('./routes/index');
+var auth = require('./routes/auth');
+var post = require('./routes/post');
+var twitter = require('./routes/twitter');
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-//router
-var auth = require('./routes/auth')(express.Router(), db, rndString);
-var post = require('./routes/post')(express.Router(), db, rndString);
-
-require('./routes/twitter')(app, db, passport, AppTwitterStrategy, rndString)
-
 //router use
-app.use('/',index);
+app.use('/', index);
 app.use('/auth',auth);
 app.use('/post',post);
+app.use('/twitter', twitter)
 
 app.listen(3000, function(){
     console.log("Server Running at 3000 port")

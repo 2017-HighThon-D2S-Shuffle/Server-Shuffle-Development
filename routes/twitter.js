@@ -1,4 +1,11 @@
-module.exports = twitter
+var rndString = require('randomstring')
+var db = require('../mongo/database')
+var TwitterTokenStrategy = require('passport-twitter-token-strategy')
+var passport = require('passport')
+var AppTwitterStrategy = require('passport-twitter-token')
+var express = require('express')
+var router = express.Router();
+var app = express();
 
 function twitter(app, db, passport, AppTwitterStrategy, rndString) {
 
@@ -13,7 +20,23 @@ function twitter(app, db, passport, AppTwitterStrategy, rndString) {
         }
     ));
 
-    app.get('/auth/twitter/token', passport.authenticate('twitter-token'), (req, res)=>{
+    passport.serializeUser((user, done) => {
+        done(null, user);
+    });
+
+    passport.deserializeUser((obj, done) => {
+        done(null, obj);
+    });
+
+    passport.use(new TwitterTokenStrategy({
+            consumerKey: 'taMJ7d17CdfEwryYawu76l3h8',
+            consumerSecret: 'HP5DnImIzU93aJI9M1Xopiku5I97baIzuy6aCZUFgRznYWGbn6'
+        }, (token, tokenSecret, profile, done) => {
+
+        }
+    ))
+
+    app.post('/auth/twitter/token', passport.authenticate('twitter-token'), (req, res)=>{
         console.log('asdf')
         console.log(req.param('oauth_token'))
         console.log(req.param('oauth_token_secret'))
@@ -29,7 +52,7 @@ function twitter(app, db, passport, AppTwitterStrategy, rndString) {
                 else if(result){
                     let user =  db.User.findOne({id: req.user._json.id}, {_id: 0});
                     let return_user = {user_id: user.id, user_token: user.token }
-                    return res.status(200).json(return_user)
+                    res.status(200).json(return_user)
                 }
                 else {
                     var saveuser = new db.User({
@@ -46,11 +69,14 @@ function twitter(app, db, passport, AppTwitterStrategy, rndString) {
                             throw err
                         }
                         else {
-                            return res.status(200).json(return_user)
+                            res.status(200).json(return_user)
                         }
                     })
                 }
             })
         }
     });
+    return router;
 }
+
+module.exports = twitter(app, db, passport, AppTwitterStrategy, rndString);
